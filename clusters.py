@@ -13,7 +13,7 @@ class Cluster:
     def __repr__(self):
         return 'Cluster({0}, {1})'.format(self.ids, self.center)
 
-def linkage(clusters, clusters_wanted=1):
+def linkage(clusters, metric, clusters_wanted=1):
     def cluster_centers():
         return [cluster.center for cluster in clusters]
 
@@ -25,7 +25,7 @@ def linkage(clusters, clusters_wanted=1):
                 ids, points)
 
     def distances_matrix():
-        return d.distances_matrix(cluster_centers())
+        return d.distances_matrix(cluster_centers(), metric=metric)
 
     def min_cluster(*clusters):
         return min([len(cluster.points) for cluster in clusters])
@@ -49,22 +49,5 @@ def linkage(clusters, clusters_wanted=1):
         clusters.append(merge_clusters(*selected_clusters))
 
         return recursive_linkage()
-
-    # while True:
-    #     # calculate distances.
-    #     distances = distances_matrix()
-
-    #     # find smaller distance.
-    #     min_dist, min_row, min_col = d.min_distance(distances)
-
-    #     # pop clusters to be merged from the list.
-    #     selected_clusters = [clusters.pop(min_row), clusters.pop(min_col - 1)]
-
-    #     # merge clusters and add result cluster to the list.
-    #     clusters.append(merge_clusters(*selected_clusters))
-
-    #     # break when number of clusters wanted is reached.
-    #     if len(clusters) == clusters_wanted:
-    #         return clusters
 
     return recursive_linkage()

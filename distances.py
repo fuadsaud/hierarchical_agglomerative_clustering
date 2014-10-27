@@ -1,15 +1,14 @@
 import numpy as np
 import scipy.spatial.distance as ssd
 
-def distance(r1, r2):
-    return ssd.euclidean(r1, r2)
+from scipy import dot, linalg
 
-def distances_matrix(records):
+def distances_matrix(records, metric=ssd.euclidean):
     distances = np.zeros((len(records), len(records)))
 
     for i, base_record in enumerate(records):
         for j, record in enumerate(records):
-            distances[i][j] = distance(base_record, record)
+            distances[i][j] = metric(base_record, record)
 
     return distances
 

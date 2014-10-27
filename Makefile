@@ -1,2 +1,2 @@
 run:
-	python hw6.py data.csv
+	python supermarket.py data.csv
